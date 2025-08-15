@@ -1,4 +1,3 @@
-use core::panic;
 use std::{error::Error, path::PathBuf};
 
 use image::{GenericImageView, imageops::FilterType};
@@ -148,9 +147,6 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     let p = args.by_ref().find(|it| it.contains("path="));
-    dbg!(&args);
-    dbg!(&p);
-
     let m = if let Some(opt) = p {
         ProcessType::from(opt.contains(".gif"))
     } else {
