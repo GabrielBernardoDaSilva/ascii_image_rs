@@ -1,6 +1,6 @@
 use std::error::Error;
 
-use image::{GenericImageView, Rgba, imageops::FilterType};
+use image::{GenericImageView, Rgba, codecs::gif, imageops::FilterType};
 
 fn luma(rgb: image::Rgba<u8>) -> u8 {
     let [r, g, b, _] = rgb.0;
@@ -8,7 +8,8 @@ fn luma(rgb: image::Rgba<u8>) -> u8 {
         as u8
 }
 const RAMP: &[u8] = b"@%#*+=-:. ";
-fn main() -> Result<(), Box<dyn Error>> {
+
+fn ascii_image() -> Result<(), Box<dyn Error>> {
     let cargo_env = env!("CARGO_MANIFEST_DIR");
     let path = std::path::PathBuf::from(cargo_env).join("cbp.jpeg");
     let file = image::open(path).unwrap();
@@ -40,5 +41,14 @@ fn main() -> Result<(), Box<dyn Error>> {
     }
 
     print!("{out}");
+    Ok(())
+}
+fn main() -> Result<(), Box<dyn Error>> {
+    let cargo_env = env!("CARGO_MANIFEST_DIR");
+    let path = std::path::PathBuf::from(cargo_env).join("cbp.gif");
+    let file = std::fs::File::open(path).unwrap();
+
+    let g = gif::GifDecoder::new(file).unwrap();
+
     Ok(())
 }
