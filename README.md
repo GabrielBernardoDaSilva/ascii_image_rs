@@ -82,7 +82,7 @@ cargo build --release
 ```bash
 cargo run -- path=image.png
 
-4. Install: (Optional)
+4. Install:
 
 cargo install --path .
 ```
